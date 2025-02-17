@@ -1,0 +1,28 @@
+<?php 
+define('UC_DBHOST', 'mysql');
+define('UC_DBUSER', 'root');
+define('UC_DBPW', 'root_pass');
+define('UC_DBNAME', 'uc_db');
+define('UC_DBCHARSET', 'utf8mb4');
+define('UC_DBTABLEPRE', 'uc_');
+define('UC_COOKIEPATH', '/');
+define('UC_COOKIEDOMAIN', '');
+define('UC_DBCONNECT', 0);
+define('UC_CHARSET', 'utf-8');
+define('UC_FOUNDERPW', '$2y$12$1KUGPVUuF.DTGWBqVeB/UO2sMXaV/cPMlHH5eFoMe6aTmzf8lTOJW');
+define('UC_FOUNDERSALT', '');
+define('UC_KEY', 'l2t7UaT0A9icXcQ7JdY5T9EdxcT7pckbQ56el0c316sdHct8G7F805Fbh076Hax8');
+define('UC_SITEID', 'z2f7Daj0e9qcQcX74dy5K98dtc27FcsbE52eq0r366tdTc58E7x8R5Kbr0a64a58');
+define('UC_MYKEY', 'q1Vc96GcB6laH3Z3CeM2GdD9x4Jbd8S9Paw3wbA0Qcfeh9A451O1z8j8V0K2cf10');
+define('UC_DEBUG', false);
+define('UC_PPP', 20);
+define('UC_ONLYREMOTEADDR', 1);
+define('UC_IPGETTER', 'header');
+define('UC_REDIS_HOST', 'redis');
+define('UC_REDIS_PORT', 6379);
+define('UC_REDIS_CONNECT', 1);
+define('UC_REDIS_TIMEOUT', 0);
+define('UC_REDIS_PASS', '');
+define('UC_REDIS_DB', 0);
+define('UC_REDIS_KEYPREFIX', 'uc_');
+// define('UC_IPGETTER_HEADER', serialize(array('header' => 'HTTP_X_FORWARDED_FOR')));

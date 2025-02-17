@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>UCenter 接口开发手册 - 基础接口</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="images/style.css" type="text/css" media="all"/>
+	<meta content="Comsenz Inc." name="Copyright"/>
+	<script type="text/javascript" src="javascript/common.js"></script>
+</head>
+<body>
+<script type="text/javascript" src="javascript/header.js"></script>
+
+<h3>全局参数</h3>
+
+<div class="submsg">
+	<h5>将以下参数放入 Header 中</h5>
+	<table border="0" cellspacing="0" cellpadding="0" class="msgtable">
+		<thead>
+		<tr>
+			<th>参数</th>
+			<td>含义</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th><i>string</i> appid</th>
+			<td>在“应用列表”中应用的 appid</td>
+		</tr>
+		<tr>
+			<th><i>string</i> nonce</th>
+			<td>随机串</td>
+		</tr>
+		<tr>
+			<th><i>int</i> t</th>
+			<td>时间戳</td>
+		</tr>
+		<tr>
+			<th><i>string</i> token</th>
+			<td>从 /token 接口获取的 token，/token 接口无需携带此参数</td>
+		</tr>
+		<tr>
+			<th><i>string</i> sign</th>
+			<td>签名，算法见下方</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<br/>
+	PHP
+	<div class="code"><pre>
+$sign = base64_encode(hash('sha256', $nonce.$t.$secret));</pre></div>
+
+	Javascript
+
+	<div class="code"><pre>
+function getSign(nonce, t, secret) {
+    let sha256 = CryptoJS.SHA256(nonce + t + secret).toString();
+    let base64_sign = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(sha256));
+    return base64_sign;
+}</pre></div>
+
+</div>
+
+<h3>获取 token</h3>
+
+<div class="submsg">
+	<h4><i>{UCenterURL}</i>/api/?/token</h4>
+	<h5>请求参数</h5>
+	<table border="0" cellspacing="0" cellpadding="0" class="msgtable">
+		<thead>
+		<tr>
+			<th>参数</th>
+			<td>含义</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th><i>string</i> token</th>
+			<td>默认空，续签旧 token 时携带旧 token</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<h5>返回值</h5>
+	<table border="0" cellspacing="0" cellpadding="0" class="msgtable">
+		<thead>
+		<tr>
+			<th>值</th>
+			<td>含义</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th><i>string</i> token</th>
+			<td>
+				token 值
+			</td>
+		</tr>
+		<tr>
+			<th><i>int</i> expires_in</th>
+			<td>
+				token 过期时间，时间戳
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="line"></div>
+
+<script type="text/javascript" src="javascript/footer.js"></script>
+</body>
+</html>

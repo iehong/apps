@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={UC_CHARSET}" />
+<title>UCenter {lang title_name}</title>
+<style type="text/css">
+/* common */
+*{ word-wrap:break-word; outline:none; }
+#leftmenu { border-top: 1px solid #333; }
+body{ width:159px; background:#182433; color:#FFF; font-size:14px; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+body, ul{ margin:0; padding:0; }
+a{ color:#FFF; text-decoration:none; }
+	a:hover { text-decoration:underline; }
+.logo { margin: 4px 0 0 2px; width: 100%; }
+.menu{ position:relative; z-index:20; }
+	.menu ul{ position:absolute; top:50px; right:-1px !important; right:-2px; list-style:none; width:100%;left: 0; }
+		.menu li{ margin:3px 0; padding: 0px; height:auto !important; height:24px; overflow:hidden; font-size:14px; }
+		.menu li a{ display:block; text-align: left; padding: 8px 0 8px 40px; color:rgba(255, 255, 255, .7); }
+			.menu li a:hover{ text-decoration:none; color:#FFF; }
+		.menu ul a:before { float: left; display: block; content: ""; color: rgba(255, 255, 255, .7); width: 6px; height: 6px; border-radius: 5px; border: 1px solid rgba(255, 255, 255, .7); flex: 0 0 6px; margin-right: 7px; margin-top: 5px; }
+		.menu li a.tabon{ text-decoration:none; margin-right:0; background:#155BD5; color:#FFF; }
+</style>
+<meta content="Discuz! Team" name="Copyright" />
+</head>
+<body>
+<div class="menu">
+	<img src="images/logo.svg" class="logo" />
+	<ul id="leftmenu">
+		{template admin_menu}
+	</ul>
+</div>
+<script type="text/javascript">
+	function cleartabon() {
+		if(lastmenu) {
+			lastmenu.className = '';
+		}
+		for(var i = 0; i < menus.length; i++) {
+			var menu = menus[i];
+			if(menu.className == 'tabon') {
+				lastmenu = menu;
+			}
+		}
+	}
+	var menus = document.getElementById('leftmenu').getElementsByTagName('a');
+	var lastmenu = '';
+	for(var i = 0; i < menus.length; i++) {
+		var menu = menus[i];
+		menu.onclick = function() {
+			setTimeout('cleartabon()', 1);
+			this.className = 'tabon';
+			this.blur();
+		}
+	}
+
+	cleartabon();
+</script>
+
+{template footer}

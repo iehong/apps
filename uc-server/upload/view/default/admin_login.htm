@@ -1,0 +1,83 @@
+{template header}
+<script type="text/javascript">
+function $(id) {
+	return document.getElementById(id);
+}
+</script>
+<style>
+	html,
+body {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #c8e2fb;
+    background-image: linear-gradient(45deg, #c8e2fb, #fbecd6);
+    font-family: sans-serif;
+}
+</style>
+<div class="login_container">
+	
+		<div class="intro">
+			<img src="images/logo.svg" />
+			<p>{lang login_tips}</p>
+		</div>
+		<form action="{UC_ADMINSCRIPT}?m=user&a=login" class="login_box" method="post"  {if $iframe}target="_self" {else}target="_top" {/if}>
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="seccodehidden" value="$seccodeinit" />
+			<input type="hidden" name="iframe" value="{$iframe}" />
+			
+			<div class="radio_box">
+				<input type="radio" name="isfounder" value="1" class="radio" {if (isset($_POST['isfounder']) && $isfounder) || !isset($_POST['isfounder'])}checked="checked"{/if} onclick="changeuser('founder')" id="founder" /><label for="founder">{lang founder}</label>
+				<input type="radio" name="isfounder" value="0" class="radio" {if (isset($_POST['isfounder']) && !$isfounder)}checked="checked"{/if} onclick="changeuser('manager')" id="admin" /><label for="admin">{lang admin_admin}</label>
+			</div>
+			<input type="text" name="username" class="txt" id="username" value="$username" placeholder="{lang login_username}" />
+			<input type="password" name="password" class="txt" id="password" value="$password" placeholder="{lang login_password}" />
+			<div class="seccode_box">
+				<input type="text" name="seccode" class="txt seccode" id="seccode" value="" placeholder="{lang login_seccode}" />
+				<img src="{UC_ADMINSCRIPT}?m=seccode&seccodeauth=$seccodeinit&{eval echo rand();}" class="checkcode" />
+			</div>
+			<input type="submit" name="submit" value="{lang login_submit}" class="btn" />
+			<!--{if $errorcode == UC_LOGIN_ERROR_FOUNDER_PW}--><div class="error">{lang login_founder_incorrect}</div>
+			<!--{elseif $errorcode == UC_LOGIN_ERROR_ADMIN_PW}--><div class="error">{lang login_incorrect}</div>
+			<!--{elseif $errorcode == UC_LOGIN_ERROR_ADMIN_NOT_EXISTS}--><div class="error">{lang login_admin_noexists}</div>
+			<!--{elseif $errorcode == UC_LOGIN_ERROR_SECCODE}--><div class="error">{lang login_seccode_error}</div>
+			<!--{elseif $errorcode == UC_LOGIN_ERROR_FAILEDLOGIN}--><div class="error">{lang login_failedlogin}</div>
+			<!--{/if}-->
+		</form>
+	
+</div>
+<script type="text/javascript">
+{if (isset($_POST['isfounder']) && $isfounder) || !isset($_POST['isfounder'])}
+	$('username').value='UCenter Administrator';
+	$('username').disabled = true;
+	$('username').readOnly = true;
+	$('password').focus();
+{else}
+	$('username').disabled = false;
+	$('username').readOnly = false;
+	$('username').focus();
+{/if}
+
+function changeuser(user) {
+	if(user == 'founder') {
+		$('username').value='UCenter Administrator';
+		$('username').readOnly = true;
+		$('username').disabled = true;
+		$('password').focus();
+	} else if(user == 'manager') {
+		$('username').value='';
+		$('username').readOnly = false;
+		$('username').disabled = false;
+		$('username').focus();
+	}
+}
+</script>
+<div class="footer">Powered by UCenter {UC_SERVER_VERSION} {lang copyright}</div>
+{template footer}

@@ -1,0 +1,35 @@
+{template header}
+
+<div class="container">
+	<h3 class="marginbot tab">
+		<a class="sgbtn" href="{UC_ADMINSCRIPT}?m=user&a=ls">{lang user_list}</a>
+		<a>{lang menu_log}</a>
+	</h3>
+	<div class="mainbox">
+		<!--{if $userlog}-->
+			<table class="datalist">
+				<tr>
+					<th>ID</th>
+					<th>UID</th>
+					<th>{lang log_operation}</th>
+					<th>{lang log_extra}</th>
+				</tr>
+				<!--{loop $userlog $log}-->
+					<tr>
+						<td>$log['lid']</td>
+						<td>$log['uid']</td>
+						<td>$log['action']</td>
+						<td>$log['extra']</td>
+					</tr>
+				<!--{/loop}-->
+				<tr class="nobg">
+					<td class="tdpage" colspan="5">$multipage</td>
+				</tr>
+			</table>
+		<!--{else}-->
+			<p class="empty">{lang list_empty}</p>
+		<!--{/if}-->
+	</div>
+</div>
+
+{template footer}

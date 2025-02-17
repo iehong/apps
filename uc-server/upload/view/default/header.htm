@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={UC_CHARSET}" />
+<title>UCenter {lang title_name}</title>
+<link rel="stylesheet" href="images/admincp.css" type="text/css" media="all" />
+<meta content="Discuz! Team" name="Copyright" />
+</head>
+<body><div id="append"></div>
+<!--{if !empty($iframe) && !empty($user)}-->
+	<a class="othersoff" style="float:right;text-align:center" id="header_menu" onclick="headermenu(this)">{lang menu}</a>
+	<ul id="header_menu_menu" style="display: none">
+		{template admin_menu}
+		<a href="{UC_ADMINSCRIPT}?m=user&a=logout" target="main">{lang menu_logout}</a>
+	</ul>
+<!--{/if}-->
+<script type="text/javascript">
+	function headermenu(ctrl) {
+		ctrl.className = ctrl.className == 'otherson' ? 'othersoff' : 'otherson';
+		var menu = document.getElementById('header_menu_body');
+		if(!menu) {
+			menu = document.createElement('div');
+			menu.id = 'header_menu_body';
+			menu.innerHTML = '<ul>' + document.getElementById('header_menu_menu').innerHTML + '</ul>';
+			var obj = ctrl;
+			var x = ctrl.offsetLeft;
+			var y = ctrl.offsetTop;
+			while((obj = obj.offsetParent) != null) {
+				x += obj.offsetLeft;
+				y += obj.offsetTop;
+			}
+			menu.style.left = x + 'px';
+			menu.style.top = y + ctrl.offsetHeight + 'px';
+			menu.className = 'togglemenu';
+			menu.style.display = '';
+			document.body.appendChild(menu);
+		} else {
+			menu.style.display = menu.style.display == 'none' ? '' : 'none';
+		}
+	}
+</script>

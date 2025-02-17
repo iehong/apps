@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>UCenter 接口开发手册 - 了解 UCenter</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="images/style.css" type="text/css" media="all"/>
+	<meta content="Comsenz Inc." name="Copyright"/>
+	<script type="text/javascript" src="javascript/common.js"></script>
+</head>
+<body>
+<script type="text/javascript" src="javascript/header.js"></script>
+
+<div class="mainmsg">以下关于文件的阐述以及代码的样例，均以 PHP 程序为例。<br/><br/></div>
+
+<h3>UCenter 的目录结构</h3>
+
+<div class="mainmsg">
+	UCenter 安装时上传此文件夹中的文件到您的服务器，在浏览器输入“http://网站地址/install/”安装 UCenter。安装后删除
+	install/ 目录。
+	<table border="0" cellspacing="0" cellpadding="0" class="msgtable">
+		<tbody>
+		<tr>
+			<th>control/</th>
+			<td>应用程序 control 部分目录</td>
+		</tr>
+		<tr>
+			<th>data/</th>
+			<td>缓存数据目录，此目录及其子目录需要有可写权限</td>
+		</tr>
+		<tr>
+			<th>images/</th>
+			<td>图片目录</td>
+		</tr>
+		<tr>
+			<th>install/</th>
+			<td>安装目录，安装后必须删除</td>
+		</tr>
+		<tr>
+			<th>js/</th>
+			<td>javascript 脚本目录</td>
+		</tr>
+		<tr>
+			<th>lib/</th>
+			<td>应用程序函数库目录</td>
+		</tr>
+		<tr>
+			<th>module/</th>
+			<td>应用程序 module 部分目录</td>
+		</tr>
+		<tr>
+			<th>view/</th>
+			<td>模板目录</td>
+		</tr>
+		<tr>
+			<th>index.php</th>
+			<td>服务端接口函数库接口文件</td>
+		</tr>
+		<tr>
+			<th>admin.php</th>
+			<td>用户管理中心主文件</td>
+		</tr>
+		<tr>
+			<th>avatar.php</th>
+			<td>头像显示</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<h3>UCenter 配置文件说明</h3>
+
+<div class="mainmsg">
+	UCenter 分为 MySQL 和远程两种接口连接方式，MySQL 方式是直接连接数据库因此速度较快，但当 UCenter
+	的服务端和客户端不在同一主机中且没有远程 MySQL 帐号的情况下，则只能使用远程连接方式。使用 UCenter
+	接口函数前请根据应用程序的需求定义以下相关常量：
+	<table border="0" cellspacing="0" cellpadding="0" class="msgtable">
+		<tbody>
+		<tr>
+			<th>UC_DBHOST</th>
+			<td>UCenter 数据库主机</td>
+		</tr>
+		<tr>
+			<th>UC_DBUSER</th>
+			<td>UCenter 数据库用户名</td>
+		</tr>
+		<tr>
+			<th>UC_DBPW</th>
+			<td>UCenter 数据库密码</td>
+		</tr>
+		<tr>
+			<th>UC_DBNAME</th>
+			<td>UCenter 数据库名称</td>
+		</tr>
+		<tr>
+			<th>UC_DBCHARSET</th>
+			<td>UCenter 数据库字符集</td>
+		</tr>
+		<tr>
+			<th>UC_DBTABLEPRE</th>
+			<td>UCenter 数据库表前缀</td>
+		</tr>
+		<tr>
+			<th>UC_DBCONNECT</th>
+			<td>UCenter 数据库持久连接 0=关闭, 1=打开</td>
+		</tr>
+		<tr>
+			<th>UC_CHARSET</th>
+			<td>UCenter 的字符集</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_HOST</th>
+			<td>Redis 服务器的主机</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_PORT</th>
+			<td>Redis 的端口</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_CONNECT</th>
+			<td>UCenter Redis 持久连接 0=关闭, 1=打开</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_TIMEOUT</th>
+			<td>Redis 的连接超时时间</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_PASS</th>
+			<td>Redis 的迷茫</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_DB</th>
+			<td>Redis 的数据库</td>
+		</tr>
+		<tr>
+			<th>UC_REDIS_KEYPREFIX</th>
+			<td>Redis 的 key 前缀</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<script type="text/javascript" src="javascript/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{template header}
+
+<script src="js/common.js" type="text/javascript"></script>
+<div class="container">
+	<h3 class="marginbot tab">
+		<!--{loop $plugins $v}-->
+		<a id="nav_action_$v[dir]" class="sgbtn" href="{UC_ADMINSCRIPT}?m=plugin&a=$v[dir]">$v[name]</a>
+		<!--{/loop}-->
+		<script type="text/javascript">document.getElementById('nav_action_$_GET[a]').className = '';</script>
+	</h3>
+	<!--{if $plugin[tips]}-->
+	<div class="note fixwidthdec"><p class="i">$plugin[tips]</p></div>
+	<!--{/if}-->
+	<div class="tabbody">

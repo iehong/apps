@@ -1,42 +1,44 @@
 services:
   nginx:
     image: nginx:stable-alpine
+    container_name: nginx
     restart: unless-stopped
     ports:
       - "80:80"
     volumes:
-      - uc-data:/var/www/html/uc-server
-      - bbs-data:/var/www/html/bbs
-      - ./nginx:/etc/nginx/conf.d
+      - ./uc-server/data:/var/www/html/uc-server
+      # - bbs-data:/var/www/html/bbs
+      - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - uc-server
-      - bbs
+      # - bbs
   uc-server:
     build:
       context: ..
       dockerfile: ./apps-docker/uc-server/Dockerfile
     restart: unless-stopped
+    container_name: uc-server
     volumes:
-      - uc-data:/var/www/html/uc-server
-      # - ./uc-server/config.inc.php:/var/www/html/uc-server/data/config.inc.php
+      - ./uc-server/data:/var/www/html/uc-server
     depends_on:
       - mysql
       - redis
-  bbs:
-    build:
-      context: ..
-      dockerfile: ./apps-docker/bbs/Dockerfile
-    restart: unless-stopped
-    extra_hosts:
-      - "uc.jiande.life:host-gateway"
-    volumes:
-      - bbs-data:/var/www/html/bbs
-    depends_on:
-      - mysql
-      - redis
+  # bbs:
+  #   build:
+  #     context: ..
+  #     dockerfile: ./apps-docker/bbs/Dockerfile
+  #   restart: unless-stopped
+  #   extra_hosts:
+  #     - "uc.jiande.life:host-gateway"
+  #   volumes:
+  #     - bbs-data:/var/www/html/bbs
+  #   depends_on:
+  #     - mysql
+  #     - redis
   n8n:
     image: n8nio/n8n
     restart: unless-stopped
+    container_name: n8n
     ports:
       - "5678:5678"
     environment:
@@ -45,9 +47,10 @@ services:
       - N8N_HOST=n8n.iehong.fun
       - N8N_PROTOCOL=https
     volumes:
-      - n8n_data:/home/node/.n8n
+      - ./n8n/data:/home/node/.n8n
   camunda:
     image: camunda/camunda-bpm-platform:run-latest
+    container_name: camunda
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -64,11 +67,13 @@ services:
   # Redis 缓存
   redis:
     image: redis:alpine
+    container_name: redis
     restart: unless-stopped
     volumes:
-      - redis-data:/data  # 数据持久化
+      - ./redis/data:/data  # 数据持久化
   mysql:
     image: mysql:lts
+    container_name: mysql
     command: 
       - --transaction-isolation=READ-COMMITTED
       - --character-set-server=utf8mb4
@@ -79,12 +84,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root_pass
     volumes:
-      - mysql-data:/var/lib/mysql  # 数据持久化
-      - ./db-init:/docker-entrypoint-initdb.d  # 挂载初始化脚本
-
-volumes:
-  n8n_data:
-  redis-data:
-  mysql-data:
-  uc-data:
-  bbs-data:
+      - ./mysql/data:/var/lib/mysql  # 数据持久化
+      - ./mysql/db-init:/docker-entrypoint-initdb.d  # 挂载初始化脚本

@@ -1,0 +1,38 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    env_file:
+      - .env
+    depends_on:
+      alpine:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  alpine:
+    image: alpine/curl:latest
+    container_name: alpine_curl
+    restart: unless-stopped
+    command: tail -f /dev/null
+    depends_on:
+      - webssh
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://host.docker.internal:5032"]
+      interval: 10s
+      retries: 5
+  webssh:
+    image: jrohy/webssh
+    restart: unless-stopped
+    container_name: webssh
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: json-file
+      options:
+        max-file: '1'
+        max-size: 100m

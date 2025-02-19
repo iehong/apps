@@ -27,4 +27,14 @@ RUN apk del $PHPIZE_DEPS \
   && rm -rf /tmp/pear \
   && docker-php-source delete
 
-COPY --chown=www-data:www-data ./uc-server/upload /var/www/html/uc-server
+RUN mkdir -p /var/www/html/uc-server
+
+VOLUME /var/www/html/uc-server
+
+COPY ./apps-docker/uc-server/uc-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/uc-entrypoint.sh
+
+COPY ./uc-server/upload /tmp/uc-server
+
+ENTRYPOINT ["uc-entrypoint.sh"]
+CMD ["php-fpm"]

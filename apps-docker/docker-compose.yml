@@ -7,11 +7,11 @@ services:
       - "80:80"
     volumes:
       - ./uc-server/data:/var/www/html/uc-server
-      # - bbs-data:/var/www/html/bbs
+      - ./bbs/data:/var/www/html/bbs
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - uc-server
-      # - bbs
+      - bbs
   uc-server:
     build:
       context: ..
@@ -23,18 +23,19 @@ services:
     depends_on:
       - mysql
       - redis
-  # bbs:
-  #   build:
-  #     context: ..
-  #     dockerfile: ./apps-docker/bbs/Dockerfile
-  #   restart: unless-stopped
-  #   extra_hosts:
-  #     - "uc.jiande.life:host-gateway"
-  #   volumes:
-  #     - bbs-data:/var/www/html/bbs
-  #   depends_on:
-  #     - mysql
-  #     - redis
+  bbs:
+    build:
+      context: ..
+      dockerfile: ./apps-docker/bbs/Dockerfile
+    container_name: bbs
+    restart: unless-stopped
+    extra_hosts:
+      - "uc.17lifezone.cn:host-gateway"
+    volumes:
+      - ./bbs/data:/var/www/html/bbs
+    depends_on:
+      - mysql
+      - redis
   n8n:
     image: n8nio/n8n
     restart: unless-stopped
@@ -88,4 +89,4 @@ services:
       - ./mysql/db-init:/docker-entrypoint-initdb.d  # 挂载初始化脚本
 
 volumes:
-  n8n-data:
+  n8n-data: 

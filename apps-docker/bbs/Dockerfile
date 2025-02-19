@@ -27,5 +27,13 @@ RUN apk del $PHPIZE_DEPS \
   && rm -rf /tmp/pear \
   && docker-php-source delete
 
-COPY --chown=www-data:www-data ./bbs/upload /var/www/html/bbs
-COPY --chown=www-data:www-data ./apps-docker/bbs/login_mobile /var/www/html/bbs/source/plugin/login_mobile
+RUN mkdir -p /var/www/html/bbs
+VOLUME /var/www/html/bbs
+
+COPY ./apps-docker/bbs/bbs-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/bbs-entrypoint.sh
+
+COPY ./bbs/upload /tmp/bbs
+
+ENTRYPOINT ["bbs-entrypoint.sh"]
+CMD ["php-fpm"]

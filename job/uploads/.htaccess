@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^news\.html$ news\.html [L]
+RewriteRule ^index\.html$ index\.html [L]
+RewriteRule ^u/(.*)$ index.php?m=upush&str=$1 [L]
+RewriteRule ^(?!(admin|about|app|api|config|data\/|favicon|index|install|js|member|news|promoter|qqlogin|siteadmin|update|wapadmin|(wap\/(member|js|authcode))))[a-z]+ index.php [L]
+
+ErrorDocument 404 /Error.php
+</IfModule>

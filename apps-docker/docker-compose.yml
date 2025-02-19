@@ -30,7 +30,7 @@ services:
     container_name: bbs
     restart: unless-stopped
     extra_hosts:
-      - "uc.17lifezone.cn:host-gateway"
+      - "uc.17lifezone.cn:172.17.0.1"
     volumes:
       - ./bbs/data:/var/www/html/bbs
     depends_on:

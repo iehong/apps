@@ -36,3 +36,10 @@ services:
       options:
         max-file: '1'
         max-size: 100m
+  clash:
+    image: dreamacro/clash
+    container_name: clash
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config.yaml:/root/.config/clash/config.yaml

@@ -41,14 +41,13 @@ services:
     container_name: n8n
     ports:
       - "5678:5678"
-    entrypoint: ["chown", "-R", "node:node", "/home/node/.n8n"]
     environment:
       - GENERIC_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
       - N8N_HOST=n8n.iehong.fun
       - N8N_PROTOCOL=https
     volumes:
-      - ./n8n/data:/home/node/.n8n
+      - n8n-data:/home/node/.n8n
   camunda:
     image: camunda/camunda-bpm-platform:run-latest
     container_name: camunda
@@ -87,3 +86,6 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql  # 数据持久化
       - ./mysql/db-init:/docker-entrypoint-initdb.d  # 挂载初始化脚本
+
+volumes:
+  n8n-data:

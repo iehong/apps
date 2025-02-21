@@ -54,7 +54,12 @@ class memory_setting_array implements ArrayAccess {
 		if (!$this->can_lazy) {
 			$this->array = memory('get', self::SETTING_KEY);
 			foreach ($this->array as $key => $value) {
-				if ($value) $this->array[$key] = dunserialize($value);
+				if ($value !== null && $value !== '') {
+					$unserializedValue = dunserialize($value);
+					if ($unserializedValue !== false) {
+						$this->array[$key] = $unserializedValue;
+					}
+				}
 			}
 		}
 	}
@@ -109,7 +114,7 @@ class memory_setting_array implements ArrayAccess {
 			}
 			memory('hmset', self::SETTING_KEY, $newdata);
 		} else {
-			memory('set', $data);
+			memory('set', self::SETTING_KEY, $data);//memcached不支持key为array
 		}
 	}
 

@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:7.4-fpm-alpine
 
 # 安装依赖和核心构建工具
 RUN apk update && apk add --no-cache \
@@ -28,7 +28,6 @@ RUN apk del $PHPIZE_DEPS \
   && docker-php-source delete
 
 RUN mkdir -p /var/www/html/uc-server
-
 VOLUME /var/www/html/uc-server
 
 COPY ./apps-docker/uc-server/uc-entrypoint.sh /usr/local/bin/

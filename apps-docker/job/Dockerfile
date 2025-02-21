@@ -1,7 +1,8 @@
 FROM php:7.4-fpm-alpine
 
 # 安装依赖和核心构建工具
-RUN apk update && apk add --no-cache \
+RUN sed -i 's/dl-cdn.alpine.com/mirrors.aliyun.com/g' /etc/apk/repositories && \
+  apk update && apk add --no-cache \
   # GD 依赖
   freetype-dev \
   libjpeg-turbo-dev \

@@ -8,10 +8,12 @@ services:
     volumes:
       - ./uc-server/data:/var/www/html/uc-server
       - ./bbs/data:/var/www/html/bbs
+      - ./job/data:/var/www/html/job
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - uc-server
       - bbs
+      - job
   uc-server:
     build:
       context: ..
@@ -38,23 +40,19 @@ services:
     depends_on:
       - mysql
       - redis
-  minio:
-    image: minio/minio
-    container_name: minio
+  job:
+    build:
+      context: ..
+      dockerfile: ./apps-docker/job/Dockerfile
+    container_name: job
     restart: unless-stopped
-    command: minio server /data --console-address ":9001" --ftp="address=:8021" --ftp="passive-port-range=30000-40000"
-    ports:
-      - "9000:9000"  # API 端口
-      - "9001:9001"  # 控制台端口
-      - "8021:8021"  # SFTP 端口
-    environment:
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_ROOT_USER=root
-      - MINIO_ROOT_PASSWORD=root_pass
     volumes:
-      - ./minio/data:/data
-      - ./minio/config:/root/.minio
+      - ./job/data:/var/www/html/job
+    extra_hosts:
+      - "uc.17lifezone.cn:host-gateway"
+    depends_on:
+      - mysql
+      - redis
   n8n:
     image: n8nio/n8n
     restart: unless-stopped

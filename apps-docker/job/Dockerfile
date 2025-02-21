@@ -29,13 +29,13 @@ RUN apk del $PHPIZE_DEPS \
   && rm -rf /tmp/pear \
   && docker-php-source delete
 
-RUN mkdir -p /var/www/html/bbs
-VOLUME /var/www/html/bbs
+RUN mkdir -p /var/www/html/job
+VOLUME /var/www/html/job
 
-COPY ./apps-docker/bbs/bbs-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/bbs-entrypoint.sh
+COPY ./apps-docker/job/job-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/job-entrypoint.sh
 
-COPY ./bbs/upload /tmp/bbs
+COPY ./job/uploads /tmp/job
 
 # 复制 msmtprc 配置文件
 COPY ./apps-docker/bbs/msmtprc /etc/msmtprc
@@ -45,5 +45,5 @@ RUN chown www-data:www-data /etc/msmtprc
 # 设置 sendmail 链接到 msmtp
 RUN ln -sf /usr/bin/msmtp /usr/sbin/sendmail
 
-ENTRYPOINT ["bbs-entrypoint.sh"]
+ENTRYPOINT ["job-entrypoint.sh"]
 CMD ["php-fpm"]

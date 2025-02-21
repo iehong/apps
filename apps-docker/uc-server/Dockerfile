@@ -9,7 +9,9 @@ RUN apk update && apk add --no-cache \
   # mysqli 依赖
   mariadb-dev \
   # Redis 和 Opcache 构建工具
-  $PHPIZE_DEPS
+  $PHPIZE_DEPS \
+  # 安装 msmtp
+  msmtp
 
 # 配置并安装 GD 扩展（启用 JPEG 和 Freetype）
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -34,6 +36,14 @@ COPY ./apps-docker/uc-server/uc-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/uc-entrypoint.sh
 
 COPY ./uc-server/upload /tmp/uc-server
+
+# 复制 msmtprc 配置文件
+COPY ./apps-docker/bbs/msmtprc /etc/msmtprc
+RUN chmod 600 /etc/msmtprc
+RUN chown www-data:www-data /etc/msmtprc
+
+# 设置 sendmail 链接到 msmtp
+RUN ln -sf /usr/bin/msmtp /usr/sbin/sendmail
 
 ENTRYPOINT ["uc-entrypoint.sh"]
 CMD ["php-fpm"]

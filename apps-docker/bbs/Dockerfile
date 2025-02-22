@@ -37,6 +37,7 @@ COPY ./apps-docker/bbs/bbs-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/bbs-entrypoint.sh
 
 COPY ./bbs/upload /tmp/bbs
+COPY ./apps-docker/bbs/template/jdshq /tmp/bbs/template/jdshq
 
 # 复制 msmtprc 配置文件
 COPY ./apps-docker/bbs/msmtprc /etc/msmtprc

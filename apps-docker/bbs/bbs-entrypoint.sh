@@ -7,5 +7,11 @@ if [ -z "$(ls -A /var/www/html/bbs)" ]; then
     chown -R www-data:www-data /var/www/html/bbs
 fi
 
+# 如果挂载目录是空的，从镜像中复制文件
+if [ -z "$(ls -A /var/www/html/bbs/template/jdshq)" ]; then
+    cp -a /tmp/bbs/template/jdshq/. /var/www/html/bbs/template/jdshq/
+    chown -R www-data:www-data /var/www/html/bbs
+fi
+
 # 执行原来的命令
 exec "$@"

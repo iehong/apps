@@ -10,6 +10,7 @@ services:
       - ./bbs/data:/var/www/html/bbs
       - ./job/data:/var/www/html/job
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./bbs/template/jdshq:/var/www/html/bbs/template/jdshq
     depends_on:
       - uc-server
       - bbs
@@ -35,6 +36,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./bbs/data:/var/www/html/bbs
+      - ./bbs/template/jdshq:/var/www/html/bbs/template/jdshq
     extra_hosts:
       - "uc.17lifezone.cn:host-gateway"
     depends_on:
